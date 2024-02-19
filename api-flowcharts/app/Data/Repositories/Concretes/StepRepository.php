@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 class StepRepository extends BaseRepository implements IStepRepository {
     
     protected $table = "steps";
-    protected $excludedFields = ["parentStepId"];
+    protected $excludedFields = ["stepParentId"];
 
     public function fetchAll() : Collection {
         $query = $this->getBuilder();

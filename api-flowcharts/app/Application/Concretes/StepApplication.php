@@ -24,7 +24,7 @@ class StepApplication extends BaseApplication implements IStepApplication {
 
     public function store(Step $step) : Step {
         $step = $this->stepDomain->store($step);
-        $this->stepParentDomain->store($step->id, $step->parentStepId);
+        $this->stepParentDomain->store($step->id, $step->stepParentId);
         return $step;
     }
 

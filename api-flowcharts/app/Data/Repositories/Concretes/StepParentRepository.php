@@ -20,7 +20,7 @@ class StepParentRepository extends BaseRepository implements IStepParentReposito
         $query = $this->getBuilder();
         // $stepParent = new StepParent(["stepId" => $stepId, "stepParentId" => $stepParentId]); 
         // $stepParentArray = $this->mapModelToArray($stepParent);
-        $id = $query->insertGetId(["step_id" => $stepId, "parent_step_id" => $stepParentId]);
+        $id = $query->insertGetId(["step_id" => $stepId, "step_parent_id" => $stepParentId]);
         // $stepParent->id = $id;
         return new StepParent();
     }
