@@ -11,6 +11,7 @@ class ApplicationServiceProvider extends ServiceProvider {
     public function register() {
         $this->app->singleton(Contracts\IFlowchartApplication::class, Concretes\FlowchartApplication::class);
         $this->app->singleton(Contracts\IStepApplication::class, Concretes\StepApplication::class);
+        $this->app->singleton(Contracts\IFlowchartStructureApplication::class, Concretes\FlowchartStructureApplication::class);
     }
 
 }

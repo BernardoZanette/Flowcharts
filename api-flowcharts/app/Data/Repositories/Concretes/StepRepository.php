@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 class StepRepository extends BaseRepository implements IStepRepository {
     
     protected $table = "steps";
-    protected $excludedFields = ["stepParentId"];
+    protected $excludedFields = [];
 
     public function fetchAll() : Collection {
         $query = $this->getBuilder();
@@ -22,6 +22,12 @@ class StepRepository extends BaseRepository implements IStepRepository {
         $id = $query->insertGetId($stepArray);
         $step->id = $id;
         return $step;
+    }
+
+    public function fetchByFlowchartId(int $id) : Collection {
+        $query = $this->getBuilder();
+        $query->where("flowchart_id", $id);
+        return $query->get();
     }
 
 }

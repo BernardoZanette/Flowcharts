@@ -25,4 +25,10 @@ class StepParentRepository extends BaseRepository implements IStepParentReposito
         return new StepParent();
     }
 
+    public function findStepParentsByStepParentIds(array $stepIds) : Collection {
+        $query = $this->getBuilder();
+        $query->whereIn("step_parent_id", $stepIds);
+        return $query->get();
+    }
+
 }
