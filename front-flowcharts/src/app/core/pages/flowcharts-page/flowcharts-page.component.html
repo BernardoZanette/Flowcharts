@@ -1,6 +1,10 @@
 <h1>Flowchart Test</h1>
+<span>Flowchart name:</span>
+<select  [(ngModel)]="flowchartId" (change)="getFlowchartStructure()" name="flowcharts" id="flowcharts">
+    <option [value]="flowchart.id" *ngFor="let flowchart of flowcharts">{{flowchart.title}}</option>
+</select>
 <div id="flowchart">
-    <div *ngFor="let step of flowchart" class="steps">
+    <div *ngFor="let step of flowchartStructure" class="steps" id="{{step.id}}">
         <span>{{step.title}}</span>
     </div>
-</div>
+</div>  

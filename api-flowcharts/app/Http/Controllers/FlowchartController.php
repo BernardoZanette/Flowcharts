@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Application\Contracts\IFlowchartStructureApplication;
 use App\Models\Flowchart;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FlowchartRequest;
 use App\Application\Contracts\IFlowchartApplication;

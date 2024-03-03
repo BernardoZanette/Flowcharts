@@ -21,7 +21,7 @@ class StepDomain implements IStepDomain {
     }
     
     public function store(Step $step) : Step {
-
+        
         return $this->stepRepository->store($step);
 
     }

@@ -13,6 +13,7 @@ class FlowchartStructureDomain implements IFlowchartStructureDomain {
     
     public function assembleStructure(Collection $steps, Collection $parents) : Collection {
         $flowchartStructure = new Collection();
+
         foreach ($steps as $step) {
             $connections = $parents->filter(function ($parent, $key) use ($step) {
                 return $parent->step_id === $step->id;

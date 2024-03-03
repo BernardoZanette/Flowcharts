@@ -6,16 +6,7 @@ export interface FlowchartResponse {
   "id": number
   "title": string
   "flowchartId": number
-  "stepParentsIds": [
-    {
-      "id": number
-      "step_id": number
-      "step_parent_id": number
-      // "deleted_at": 
-      // "created_at": 
-      // "updated_at": 
-    }
-  ]
+  "stepParentIds": []
 }
 
 @Injectable({
@@ -30,6 +21,10 @@ export class FlowchartService {
 
   getStructure(flowchartId : number) {
     return this.httpClient.get(`${this.base}/${flowchartId}/structure`);
+  }
+
+  getFlowcharts() {
+    return this.httpClient.get(`${this.base}`);
   }
 
 }

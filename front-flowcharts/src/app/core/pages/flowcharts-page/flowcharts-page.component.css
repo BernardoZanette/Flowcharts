@@ -12,3 +12,12 @@
 h1 {
     text-align: center;
 }
+span {
+    margin-right: 10px;
+    font-size: 20px;
+}
+select {
+    border: solid 1px white;
+    outline: 0;
+    font-size: 20px;
+}
