@@ -6,5 +6,34 @@
 <div id="flowchart">
     <div *ngFor="let step of flowchartStructure" class="steps" id="{{step.id}}">
         <span>{{step.title}}</span>
+        <button>+</button>
     </div>
-</div>  
+</div>
+
+<h1>Teste</h1>
+
+<div #flowchart>
+    <div class="conjunto">
+        <div class="steps" id="26">
+            <span>pai1</span>
+        </div>
+        <div class="filhos">
+            <div class="steps" id="33">
+                <span>filho1</span>
+            </div>
+            <div class="conjunto">
+                <div class="steps" id="34">
+                    <span>filho2</span>
+                </div>
+                <div class="filhos">
+                    <div class="steps" id="34">
+                        <span>filhoDoFilho1</span>
+                    </div>
+                    <div class="steps" id="34">
+                        <span>filhoDoFilho2</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
