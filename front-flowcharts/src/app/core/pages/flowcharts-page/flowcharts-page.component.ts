@@ -30,7 +30,6 @@ export class FlowchartsPageComponent {
     this.getFlowcharts()
     this.flowchartId = 1
     this.getFlowchartStructure() 
-    // console.log(this.flowchartDiv.nativeElement);
   }
 
   // TO-DO: trocar data-type depois de subscribe
@@ -45,38 +44,43 @@ export class FlowchartsPageComponent {
       this.flowchartStructure = flowchartData
       this.structureChildren()
     })
-  }
+  } 
 
   structureChildren() {
+    
+    // Limpar flowchart e botar o novo:
+    this.renderer.setProperty(this.flowchartDiv.nativeElement, 'innerHTML', "")
+    
     let structure = this.flowchartStructure
 
     // console.log(structure)
+    structure.forEach((step) => {
 
-    structure.forEach((step) => { 
       const stepParentValues = Object.values(step.stepParentIds)
 
+      const parentDiv = this.renderer.createElement('div');
+      const textParent = this.renderer.createText(step.title);
+      this.renderer.setAttribute(parentDiv, 'id', step.id.toString())
+      this.renderer.appendChild(parentDiv, textParent);
+      this.renderer.appendChild(this.flowchartDiv.nativeElement, parentDiv)
+
       // IS SON
-      if (stepParentValues.length !== 0) {
+      // if (stepParentValues.length !== 0) {
 
-        this.actualParentId = stepParentValues[0]['step_parent_id']
-        const parentDiv = this.renderer.createElement('div');
-        const textParent = this.renderer.createText(step.title);
-        this.renderer.setAttribute(parentDiv, 'id', step.id.toString())
-        this.renderer.appendChild(parentDiv, textParent);
-        this.renderer.appendChild(this.flowchartDiv.nativeElement, parentDiv)
+      //   this.actualParentId = stepParentValues[0]['step_parent_id']
+      //   const parentDiv = this.renderer.createElement('div');
+      //   const textParent = this.renderer.createText(step.title);
+      //   this.renderer.setAttribute(parentDiv, 'id', step.id.toString())
+      //   this.renderer.appendChild(parentDiv, textParent);
+      //   this.renderer.appendChild(this.flowchartDiv.nativeElement, parentDiv)
         
-      }
-      // IS FATHER:
-      else {
+      // }
+      // // IS FATHER:
+      // else {
 
-        const parentDiv = this.renderer.createElement('div');
-        const textParent = this.renderer.createText(step.title);
-        this.renderer.setAttribute(parentDiv, 'id', step.id.toString())
-        this.renderer.appendChild(parentDiv, textParent);
-        this.renderer.appendChild(this.flowchartDiv.nativeElement, parentDiv)
-
-      }
-    })
-  }
+        
+      // }
+      })
+    }
 
 }
