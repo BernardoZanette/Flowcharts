@@ -9,7 +9,7 @@ import { Renderer2 } from '@angular/core';
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule 
   ],
   templateUrl: './flowcharts-page.component.html',
   styleUrl: './flowcharts-page.component.css'
@@ -18,7 +18,7 @@ export class FlowchartsPageComponent {
 
   constructor(private flowchartService: FlowchartService, private renderer: Renderer2) {}
 
-  // @ViewChild('flowchart', { static: true }) flowchartDiv: ElementRef;
+  @ViewChild('flowchart', { static: true }) flowchartDiv: ElementRef;
 
   pais!: [];
   flowchartStructure!: FlowchartResponse[];
@@ -49,37 +49,31 @@ export class FlowchartsPageComponent {
 
   structureChildren() {
     let structure = this.flowchartStructure
+
+    // console.log(structure)
+
     structure.forEach((step) => { 
       const stepParentValues = Object.values(step.stepParentIds)
-      console.log(step)
 
       // IS SON
       if (stepParentValues.length !== 0) {
+
         this.actualParentId = stepParentValues[0]['step_parent_id']
-        console.log('filho: ' + step.id + ' com o pai: ' + this.actualParentId)
-        
-        // const conjunto_pai = document.getElementById(this.actualParentId.toString()).parentNode
-
-        // const div_filho = document.getElementById(step.id.toString())
-
-        // this.renderer.appendChild(conjunto_pai, div_filhos)
-        // this.renderer.appendChild(div_filhos, div_filho)
+        const parentDiv = this.renderer.createElement('div');
+        const textParent = this.renderer.createText(step.title);
+        this.renderer.setAttribute(parentDiv, 'id', step.id.toString())
+        this.renderer.appendChild(parentDiv, textParent);
+        this.renderer.appendChild(this.flowchartDiv.nativeElement, parentDiv)
         
       }
       // IS FATHER:
       else {
-        console.log('pai: ' + step.id)
-        
-        // const pai = document.getElementById(step.id.toString());
-        
-        // const conjunto = this.renderer.createElement('div');
-        // conjunto.setAttribute('class', 'conjuntoPaiFilho')
 
-        // this.renderer.appendChild((pai.parentNode), conjunto)
-        // this.renderer.appendChild(conjunto, pai)
-
-        // var div_filhos = this.renderer.createElement('div');
-        // div_filhos.setAttribute('class', 'filhos')
+        const parentDiv = this.renderer.createElement('div');
+        const textParent = this.renderer.createText(step.title);
+        this.renderer.setAttribute(parentDiv, 'id', step.id.toString())
+        this.renderer.appendChild(parentDiv, textParent);
+        this.renderer.appendChild(this.flowchartDiv.nativeElement, parentDiv)
 
       }
     })
