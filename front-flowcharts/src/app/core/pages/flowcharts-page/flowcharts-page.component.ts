@@ -20,7 +20,6 @@ export class FlowchartsPageComponent {
 
   @ViewChild('flowchart', { static: true }) flowchartDiv: ElementRef;
 
-  pais!: [];
   flowchartStructure!: FlowchartResponse[];
   flowcharts!: FlowchartResponse[];
   flowchartId!: number;
@@ -52,35 +51,41 @@ export class FlowchartsPageComponent {
     this.renderer.setProperty(this.flowchartDiv.nativeElement, 'innerHTML', "")
     
     let structure = this.flowchartStructure
+    console.log(structure)
+    const parents = []
 
     // console.log(structure)
     structure.forEach((step) => {
 
       const stepParentValues = Object.values(step.stepParentIds)
+      // console.log(step)
+      // console.log(stepParentValues)
 
-      const parentDiv = this.renderer.createElement('div');
-      const textParent = this.renderer.createText(step.title);
-      this.renderer.setAttribute(parentDiv, 'id', step.id.toString())
-      this.renderer.appendChild(parentDiv, textParent);
-      this.renderer.appendChild(this.flowchartDiv.nativeElement, parentDiv)
+      const stepDiv = this.renderer.createElement('div');
+      const spanStep = this.renderer.createElement('span');
+      const textStep = this.renderer.createText(step.title)
+      this.renderer.setAttribute(stepDiv, 'id', step.id.toString())
+      this.renderer.setAttribute(stepDiv, 'class', 'steps')
+      this.renderer.appendChild(spanStep, textStep);
+      this.renderer.appendChild(stepDiv, spanStep);
 
+      this.renderer.appendChild(this.flowchartDiv.nativeElement, stepDiv)
+
+      // console.log(stepParentValues)
       // IS SON
-      // if (stepParentValues.length !== 0) {
+      if (stepParentValues.length !== 0) {
+        // const parent = parents.filter((parent) => parent.id == stepParentValues[0]['step_parent_id']);
+        // this.renderer.appendChild(this.flowchartDiv.nativeElement, stepDiv)
+      }
 
-      //   this.actualParentId = stepParentValues[0]['step_parent_id']
-      //   const parentDiv = this.renderer.createElement('div');
-      //   const textParent = this.renderer.createText(step.title);
-      //   this.renderer.setAttribute(parentDiv, 'id', step.id.toString())
-      //   this.renderer.appendChild(parentDiv, textParent);
-      //   this.renderer.appendChild(this.flowchartDiv.nativeElement, parentDiv)
-        
-      // }
       // // IS FATHER:
-      // else {
-
+      else {
         
-      // }
+        // parents.push(stepDiv)
+        // this.renderer.appendChild(this.flowchartDiv.nativeElement, stepDiv)
+
+      }
       })
-    }
+  }
 
 }

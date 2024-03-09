@@ -3,4 +3,4 @@
 <select  [(ngModel)]="flowchartId" (change)="getFlowchartStructure()" name="flowcharts" id="flowcharts">
     <option [value]="flowchart.id" *ngFor="let flowchart of flowcharts">{{flowchart.title}}</option>
 </select>
-<div #flowchart></div>
+<div #flowchart id="flowchart"></div>
