@@ -27,4 +27,8 @@ class StepApplication extends BaseApplication implements IStepApplication {
         return $step;
     }
 
+    public function findByFlowchartId(int $flowchartId) : Collection {
+        return $this->stepDomain->fetchByFlowchartId($flowchartId);
+    }
+
 }

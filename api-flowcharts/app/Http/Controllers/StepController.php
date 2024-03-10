@@ -25,4 +25,8 @@ class StepController extends Controller
         return $this->stepApplication->store($step);
     }
 
+    public function findByFlowchartId(int $flowchartId) {
+        return $this->stepApplication->findByFlowchartId($flowchartId);
+    }
+
 }

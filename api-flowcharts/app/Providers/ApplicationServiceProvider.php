@@ -12,6 +12,7 @@ class ApplicationServiceProvider extends ServiceProvider {
         $this->app->singleton(Contracts\IFlowchartApplication::class, Concretes\FlowchartApplication::class);
         $this->app->singleton(Contracts\IStepApplication::class, Concretes\StepApplication::class);
         $this->app->singleton(Contracts\IFlowchartStructureApplication::class, Concretes\FlowchartStructureApplication::class);
+        $this->app->singleton(Contracts\IStepParentApplication::class, Concretes\StepParentApplication::class);
     }
 
 }

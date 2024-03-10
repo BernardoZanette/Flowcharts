@@ -15,6 +15,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->group(['namespace' => $this->namespace], function ($router) {
             require app_path('Http\Routes\FlowchartControllerRoutes.php');
             require app_path('Http\Routes\StepControllerRoutes.php');
+            require app_path('Http\Routes\StepParentControllerRoutes.php');
         });
     }
 
