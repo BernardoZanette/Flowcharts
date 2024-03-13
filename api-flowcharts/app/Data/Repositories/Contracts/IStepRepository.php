@@ -10,4 +10,6 @@ interface IStepRepository {
 
     public function store(Step $step) : Step;
 
+    public function fetchByFlowchartId(int $id) : Collection;
+
 }

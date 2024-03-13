@@ -9,5 +9,7 @@ interface IStepApplication {
     public function fetchAll() : Collection;
 
     public function store(Step $step) : Step;
+    
+    public function findByFlowchartId(int $flowchartId) : Collection;
 
 }

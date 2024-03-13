@@ -21,8 +21,14 @@ class StepDomain implements IStepDomain {
     }
     
     public function store(Step $step) : Step {
-
+        
         return $this->stepRepository->store($step);
+
+    }
+
+    public function fetchByFlowchartId(int $id) : Collection {
+
+        return $this->stepRepository->fetchByFlowchartId($id);
 
     }
 

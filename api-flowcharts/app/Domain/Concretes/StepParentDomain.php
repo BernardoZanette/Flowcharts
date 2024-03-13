@@ -26,4 +26,14 @@ class StepParentDomain implements IStepParentDomain {
 
     }
 
+    public function findStepParentsBySteps(Collection $steps) : Collection {
+
+        $stepIds = [];
+        foreach ($steps as $step) {
+            $stepIds[] = $step->id;
+        }
+        return $this->stepParentRepository->findStepParentsByStepParentIds($stepIds);
+
+    }
+
 }

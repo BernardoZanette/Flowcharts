@@ -12,6 +12,7 @@ class DomainServiceProvider extends ServiceProvider {
         $this->app->singleton(Contracts\IFlowchartDomain::class, Concretes\FlowchartDomain::class);
         $this->app->singleton(Contracts\IStepDomain::class, Concretes\StepDomain::class);
         $this->app->singleton(Contracts\IStepParentDomain::class, Concretes\StepParentDomain::class);
+        $this->app->singleton(Contracts\IFlowchartStructureDomain::class, Concretes\FlowchartStructureDomain::class);
     }
 
 }

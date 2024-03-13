@@ -4,7 +4,6 @@ namespace App\Application\Concretes;
 use App\Models\Step;
 use Illuminate\Support\Collection;
 use App\Domain\Contracts\IStepDomain;
-use App\Domain\Concretes\StepParentDomain;
 use App\Domain\Contracts\IStepParentDomain;
 use App\Application\Contracts\IStepApplication;
 
@@ -24,8 +23,12 @@ class StepApplication extends BaseApplication implements IStepApplication {
 
     public function store(Step $step) : Step {
         $step = $this->stepDomain->store($step);
-        $this->stepParentDomain->store($step->id, $step->parentStepId);
+        $this->stepParentDomain->store($step->id, $step->stepParentId);
         return $step;
+    }
+
+    public function findByFlowchartId(int $flowchartId) : Collection {
+        return $this->stepDomain->fetchByFlowchartId($flowchartId);
     }
 
 }

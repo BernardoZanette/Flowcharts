@@ -9,7 +9,7 @@ class StepParent extends Model
 {
     protected ?int $id = null;
     protected ?int $stepId = null;
-    protected ?int $parentStepId = null;
+    protected ?int $stepParentId = null;
     protected ?Carbon $createdAt = null;
     protected ?Carbon $updatedAt = null;
     protected ?Carbon $deletedAt = null;
