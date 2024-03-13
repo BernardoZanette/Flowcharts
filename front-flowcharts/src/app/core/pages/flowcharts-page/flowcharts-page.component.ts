@@ -54,8 +54,6 @@ export class FlowchartsPageComponent {
 
     this.stepService.getStepsByFlowchartId(this.flowchartId).subscribe((stepsData : any) => {
       this.steps = stepsData
-      console.log("info que deveria vir:")
-      console.log(this.steps)
     }) 
 
     this.drawFlowchartStructure()
