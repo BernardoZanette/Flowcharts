@@ -36,35 +36,40 @@ export class FlowchartsPageComponent {
 
   ngOnInit() {
     this.getFlowcharts()
-    this.flowchartId = 1
     this.setFlowchartStructure()
-    this.drawFlowchartStructure()
   }
 
-  // TO-DO: trocar data-type depois de subscribe
   getFlowcharts() {
-    this.flowchartService.getFlowcharts().subscribe((flowcharts:any) => {
+    this.flowchartService.getFlowcharts().subscribe((flowcharts : any) => {
       this.flowcharts = flowcharts
+      this.flowchartId = flowcharts[0].id
     })
   }
 
   setFlowchartStructure() {
+
     this.parentsService.getParentsByFlowchartId(this.flowchartId).subscribe((parentsData : any) => {
       this.connections = parentsData
     })
 
     this.stepService.getStepsByFlowchartId(this.flowchartId).subscribe((stepsData : any) => {
       this.steps = stepsData
-    })    
-  } 
+      console.log("info que deveria vir:")
+      console.log(this.steps)
+    }) 
+
+    this.drawFlowchartStructure()
+
+  }
+
 
   drawFlowchartStructure() {
-    
+
     // Limpar flowchart e botar o novo:
     this.renderer.setProperty(this.flowchartDiv.nativeElement, 'innerHTML', "")
 
     const stepsQueue = [];
-    stepsQueue.push(this.getRootStep())
+    if (this.steps) stepsQueue.push(this.getRootStep())
     this.drawStep(stepsQueue[0])
 
     while(stepsQueue.length > 0) {
@@ -78,21 +83,21 @@ export class FlowchartsPageComponent {
 
   private getRootStep(){
     const childrenStepIds = []
-    this.connections?.forEach(connection => {
+    this.connections.forEach(connection => {
       childrenStepIds.push(connection.step_id)
     })
-    return this.steps?.find(step => !childrenStepIds.includes(step.id))
+    return this.steps.find(step => !childrenStepIds.includes(step.id))
   }
 
   private getChildrenFrom(step) {
     const childrenStepIds = []
-    this.connections?.forEach(connection => {
+    this.connections.forEach(connection => {
       if (step.id == connection.step_parent_id) {
-        childrenStepIds?.push(connection.step_id)
+        childrenStepIds.push(connection.step_id)
       }
     })
 
-    return this.steps?.filter(step => childrenStepIds.includes(step.id))
+    return this.steps.filter(step => childrenStepIds.includes(step.id))
   }
 
   private drawStep(step) {
@@ -120,9 +125,9 @@ export class FlowchartsPageComponent {
 
       this.renderer.setAttribute(groupDiv, 'class', 'groupChildren')
 
-      const parentHtml = this.overStepsHtml?.find(step => step.id == parent.id)
+      const parentHtml = this.overStepsHtml.find(step => step.id == parent.id)
 
-      children?.forEach(child => {
+      children.forEach(child => {
         let childHtml = this.drawStep(child)
         if (childHtml && parentHtml) this.renderer.appendChild(groupDiv, childHtml)
       });
