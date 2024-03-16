@@ -8,7 +8,7 @@ interface IStepParentRepository {
     
     public function fetchAll() : Collection;
 
-    public function store(int $stepId, int $stepParentId) : StepParent;
+    public function store(int $stepId, ?int $stepParentId) : StepParent;
 
     public function findStepParentsByStepParentIds(array $stepIds) : Collection;
 

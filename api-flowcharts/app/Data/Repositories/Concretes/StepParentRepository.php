@@ -16,7 +16,7 @@ class StepParentRepository extends BaseRepository implements IStepParentReposito
         return $query->get();
     }
 
-    public function store(int $stepId, int $stepParentId) : StepParent {
+    public function store(int $stepId, ?int $stepParentId = null) : StepParent {
         $query = $this->getBuilder();
         // $stepParent = new StepParent(["stepId" => $stepId, "stepParentId" => $stepParentId]); 
         // $stepParentArray = $this->mapModelToArray($stepParent);

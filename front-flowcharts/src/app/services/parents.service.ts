@@ -17,8 +17,14 @@ export class ParentsService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getParentsByFlowchartId(flowchartId: number) {
-    return this.httpClient.get(`${this.base}/flowchart/${flowchartId}`);
+  public getParentsByFlowchartId(flowchartId: number): Promise<any> {
+    const promise: Promise<any> = new Promise((resolve: any, reject: any) => {
+      this.httpClient.get(`${this.base}/flowchart/${flowchartId}`).subscribe(
+        (response: any) => resolve(response),
+        (error: any) => reject(error)
+      );
+    })
+    return promise
   }
 
 }
