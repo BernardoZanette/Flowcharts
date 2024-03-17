@@ -26,6 +26,7 @@ export class FlowchartsPageComponent {
   ) {}
 
   @ViewChild('flowchart', { static: true }) flowchartDiv: ElementRef;
+  @ViewChild('modal', { static: true }) modal: ElementRef;
 
   flowcharts!: FlowchartResponse[];
   flowchartId!: number;
@@ -50,7 +51,8 @@ export class FlowchartsPageComponent {
     await this.parentsService.getParentsByFlowchartId(this.flowchartId).then(connections => {
       this.connections = connections;
     });
-    this.stepService.getStepsByFlowchartId(this.flowchartId).then(steps => {
+    
+    await this.stepService.getStepsByFlowchartId(this.flowchartId).then(steps => {
       this.steps = steps
       this.drawFlowchartStructure();
     });
@@ -102,6 +104,8 @@ export class FlowchartsPageComponent {
       const stepDiv = this.renderer.createElement('div');
       const spanStep = this.renderer.createElement('span');
       const textStep = this.renderer.createText(step.title);
+      const stepButton = this.renderer.createElement('button');
+      const textStepButton = this.renderer.createText('icon+');
 
       this.renderer.setAttribute(overStepDiv, 'id', step.id.toString());
       this.renderer.setAttribute(stepDiv, 'class', 'steps');
@@ -111,7 +115,11 @@ export class FlowchartsPageComponent {
       this.renderer.appendChild(stepDiv, spanStep);
       this.renderer.appendChild(overStepDiv, stepDiv);
       this.renderer.appendChild(this.flowchartDiv.nativeElement, overStepDiv);
+      this.renderer.appendChild(stepButton, textStepButton);
+      this.renderer.appendChild(stepDiv, stepButton);
 
+      stepButton.addEventListener('click', this.addStep.bind(this, overStepDiv));
+      
       this.overStepsHtml.push(overStepDiv);
       return overStepDiv;
   }
@@ -132,4 +140,32 @@ export class FlowchartsPageComponent {
 
   }
 
+  private addStep(parentDiv: any): any{
+
+    this.actualParentId = parentDiv.id
+    
+    // aparecer modal
+    this.modal.nativeElement.setAttribute("class", "modalOn")
+    
+  }
+
+  async submitStep(stepTitle: any){
+
+    let stepData = {
+      "title": stepTitle.value, 
+      "flowchart_id": this.flowchartId,
+      "stepParentId": this.actualParentId
+    }
+    await this.stepService.createStep(stepData);
+
+    this.modal.nativeElement.setAttribute("class", "modalOff");
+    stepTitle.value = "";
+
+    await this.setFlowchartStructure()
+  }
+
+  backToScreen(stepTitle: any) {    
+    stepTitle.value = "";
+    this.modal.nativeElement.setAttribute("class", "modalOff");
+  }
 }

@@ -3,4 +3,21 @@
 <select  [(ngModel)]="flowchartId" (change)="setFlowchartStructure()" name="flowcharts" id="flowcharts">
     <option [value]="flowchart.id" *ngFor="let flowchart of flowcharts">{{flowchart.title}}</option>
 </select>
+
+<div *ngIf="!this.steps">
+    <button>+</button>
+</div>
+
+<div #modal id="modal" class="modalOff">
+    <div class="modal-content">
+        <form id="modalForm">
+            <input type="text" #stepTitle id="stepTitle" placeholder="Type the step title...">
+            <div id="modalButtons">
+                <button id="submitButton" (click)="submitStep(stepTitle)">Add Step</button>
+                <button id="backButton" (click)="backToScreen(stepTitle)">Back</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div #flowchart id="flowchart"></div>
