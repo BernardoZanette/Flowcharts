@@ -4,8 +4,9 @@
     <option [value]="flowchart.id" *ngFor="let flowchart of flowcharts">{{flowchart.title}}</option>
 </select>
 
-<div *ngIf="!this.steps">
-    <button>+</button>
+<div *ngIf="!this.steps.length" id="firstStepDiv">
+    <span>Add First Step</span>
+    <button (click)="addStep(null)" class="addButton"><img class="icons" src="assets/images/plus-sign.png" alt="plus sign"></button>
 </div>
 
 <div #modal id="modal" class="modalOff">

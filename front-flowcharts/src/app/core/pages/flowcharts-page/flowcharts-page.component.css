@@ -14,7 +14,8 @@
     padding: 10px;
     height: min-content;
     border: solid 2px purple;
-    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 .groupChildren {
     display: flex;
@@ -104,4 +105,32 @@ select {
     color: white;
     font-weight: bold;
     border: solid 1px transparent;
+}
+
+.addButton {
+    background-color: transparent;
+    color: rgb(0, 255, 0);
+    border: none;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.removeButton {
+    background-color: transparent;
+    color: rgb(255, 0, 0);
+    border: none;
+    font-size: large;
+    font-weight: bold;
+}
+
+.icons {
+    width: 20px;
+    height: 20px;
+}
+
+#firstStepDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

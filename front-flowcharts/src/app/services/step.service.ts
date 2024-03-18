@@ -37,13 +37,14 @@ export class StepService {
     return promise;
   }
 
-  public deleteStep(stepId: number): Promise<any> {
-    const promise: Promise<any> = new Promise((resolve: any, reject: any) => {
-      this.httpClient.delete(`${this.base}/${stepId}`).subscribe(
-        (response: any) => resolve(response),
-        (error: any) => reject(error)
-      );
-    })
-    return promise;
-  }
+  // public deleteStep(stepId: number): Promise<any> {
+  //   const promise: Promise<any> = new Promise((resolve: any, reject: any) => {
+  //     // repetição tirando todos os stepId
+  //     this.httpClient.delete(`${this.base}/${stepId}`).subscribe(
+  //       (response: any) => resolve(response),
+  //       (error: any) => reject(error)
+  //     );
+  //   })
+  //   return promise;
+  // }
 }

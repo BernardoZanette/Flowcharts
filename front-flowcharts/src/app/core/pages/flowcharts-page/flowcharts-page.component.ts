@@ -32,8 +32,10 @@ export class FlowchartsPageComponent {
   flowchartId!: number;
   actualParentId!:number;
   connections!: ParentResponse[];
-  steps!: StepResponse[];
+  steps: StepResponse[] = [];
   overStepsHtml: any = [];
+  plusSign: string = "assets/images/plus-sign.png";
+  trash: string = "assets/images/trash.png";
 
   async ngOnInit() {
     await this.getFlowcharts();
@@ -104,8 +106,10 @@ export class FlowchartsPageComponent {
       const stepDiv = this.renderer.createElement('div');
       const spanStep = this.renderer.createElement('span');
       const textStep = this.renderer.createText(step.title);
-      const stepButton = this.renderer.createElement('button');
-      const textStepButton = this.renderer.createText('icon+');
+      const stepAddButton = this.renderer.createElement('button');
+      const textStepAddButton = this.renderer.createElement('img');
+      const stepRemoveButton = this.renderer.createElement('button');
+      const textStepRemoveButton = this.renderer.createElement('img');
 
       this.renderer.setAttribute(overStepDiv, 'id', step.id.toString());
       this.renderer.setAttribute(stepDiv, 'class', 'steps');
@@ -115,10 +119,20 @@ export class FlowchartsPageComponent {
       this.renderer.appendChild(stepDiv, spanStep);
       this.renderer.appendChild(overStepDiv, stepDiv);
       this.renderer.appendChild(this.flowchartDiv.nativeElement, overStepDiv);
-      this.renderer.appendChild(stepButton, textStepButton);
-      this.renderer.appendChild(stepDiv, stepButton);
 
-      stepButton.addEventListener('click', this.addStep.bind(this, overStepDiv));
+      // buttons
+      this.renderer.setAttribute(textStepAddButton, 'class', 'icons')
+      this.renderer.setAttribute(textStepRemoveButton, 'class', 'icons')
+      this.renderer.setAttribute(textStepAddButton, 'src', this.plusSign)
+      this.renderer.setAttribute(textStepRemoveButton, 'src', this.trash)
+      this.renderer.setAttribute(stepAddButton, 'class', 'addButton');
+      this.renderer.setAttribute(stepRemoveButton, 'class', 'removeButton');
+      this.renderer.appendChild(stepRemoveButton, textStepRemoveButton);
+      this.renderer.appendChild(stepAddButton, textStepAddButton);
+      this.renderer.appendChild(stepDiv, stepAddButton);
+      this.renderer.appendChild(stepDiv, stepRemoveButton);
+
+      stepAddButton.addEventListener('click', this.addStep.bind(this, overStepDiv));
       
       this.overStepsHtml.push(overStepDiv);
       return overStepDiv;
@@ -140,9 +154,9 @@ export class FlowchartsPageComponent {
 
   }
 
-  private addStep(parentDiv: any): any{
+  addStep(parentDiv: any): any{
 
-    this.actualParentId = parentDiv.id
+    if (parentDiv) this.actualParentId = parentDiv.id
     
     // aparecer modal
     this.modal.nativeElement.setAttribute("class", "modalOn")
@@ -154,13 +168,12 @@ export class FlowchartsPageComponent {
     let stepData = {
       "title": stepTitle.value, 
       "flowchart_id": this.flowchartId,
-      "stepParentId": this.actualParentId
     }
-    await this.stepService.createStep(stepData);
+    if (this.actualParentId) stepData["stepParentId"] = this.actualParentId
 
+    await this.stepService.createStep(stepData);
     this.modal.nativeElement.setAttribute("class", "modalOff");
     stepTitle.value = "";
-
     await this.setFlowchartStructure()
   }
 
