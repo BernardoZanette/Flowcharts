@@ -17,8 +17,34 @@ export class StepService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getStepsByFlowchartId(flowchartId: number) {
-    return this.httpClient.get(`${this.base}/flowchart/${flowchartId}`);
+  public getStepsByFlowchartId(flowchartId: number): Promise<any> {
+    const promise: Promise<any> = new Promise((resolve: any, reject: any) => {
+      this.httpClient.get(`${this.base}/flowchart/${flowchartId}`).subscribe(
+        (response: any) => resolve(response),
+        (error: any) => reject(error)
+      );
+    })
+    return promise;
   }
 
+  public createStep(stepData: object): Promise<any> {
+    const promise: Promise<any> = new Promise((resolve: any, reject: any) => {
+      this.httpClient.post(`${this.base}`, stepData).subscribe(
+        (response: any) => resolve(response),
+        (error: any) => reject(error)
+      );
+    })
+    return promise;
+  }
+
+  // public deleteStep(stepId: number): Promise<any> {
+  //   const promise: Promise<any> = new Promise((resolve: any, reject: any) => {
+  //     // repetição tirando todos os stepId
+  //     this.httpClient.delete(`${this.base}/${stepId}`).subscribe(
+  //       (response: any) => resolve(response),
+  //       (error: any) => reject(error)
+  //     );
+  //   })
+  //   return promise;
+  // }
 }

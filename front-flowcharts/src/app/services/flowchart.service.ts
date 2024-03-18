@@ -19,12 +19,24 @@ export class FlowchartService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getStructure(flowchartId : number) {
-    return this.httpClient.get(`${this.base}/${flowchartId}/structure`);
+  public getStructure(flowchartId : number): Promise<any> {
+    const promise: Promise<any> = new Promise((resolve: any, reject: any) => {
+      this.httpClient.get(`${this.base}/${flowchartId}/structure`).subscribe(
+        (response: any) => resolve(response),
+        (error: any) => reject(error)
+      );
+    })
+    return promise;
   }
 
-  getFlowcharts() {
-    return this.httpClient.get(`${this.base}`);
+  public getFlowcharts(): Promise<any> {
+    const promise: Promise<any> = new Promise((resolve: any, reject: any) => {
+      this.httpClient.get(`${this.base}`).subscribe(
+        (response: any) => resolve(response),
+        (error: any) => reject(error)
+      );
+    })
+    return promise;
   }
 
 }

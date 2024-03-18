@@ -17,13 +17,11 @@ class StepParentDomain implements IStepParentDomain {
     public function fetchAll() : Collection {
 
         return $this->stepParentRepository->fetchAll();
-
     }
     
-    public function store(int $stepId, int $stepParentId) : StepParent {
+    public function store(int $stepId, ?int $stepParentId = null) : StepParent {
 
         return $this->stepParentRepository->store($stepId, $stepParentId);
-
     }
 
     public function findStepParentsBySteps(Collection $steps) : Collection {
@@ -33,7 +31,6 @@ class StepParentDomain implements IStepParentDomain {
             $stepIds[] = $step->id;
         }
         return $this->stepParentRepository->findStepParentsByStepParentIds($stepIds);
-
     }
 
 }

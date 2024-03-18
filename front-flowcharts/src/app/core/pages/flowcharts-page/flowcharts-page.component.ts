@@ -26,112 +26,159 @@ export class FlowchartsPageComponent {
   ) {}
 
   @ViewChild('flowchart', { static: true }) flowchartDiv: ElementRef;
+  @ViewChild('modal', { static: true }) modal: ElementRef;
 
   flowcharts!: FlowchartResponse[];
   flowchartId!: number;
   actualParentId!:number;
   connections!: ParentResponse[];
-  steps!: StepResponse[];
+  steps: StepResponse[] = [];
   overStepsHtml: any = [];
+  plusSign: string = "assets/images/plus-sign.png";
+  trash: string = "assets/images/trash.png";
 
-  ngOnInit() {
-    this.getFlowcharts()
-    this.setFlowchartStructure()
+  async ngOnInit() {
+    await this.getFlowcharts();
+    await this.setFlowchartStructure();
   }
 
-  getFlowcharts() {
-    this.flowchartService.getFlowcharts().subscribe((flowcharts : any) => {
-      this.flowcharts = flowcharts
-      this.flowchartId = flowcharts[0].id
-    })
+  async getFlowcharts() {
+    let flowcharts = await this.flowchartService.getFlowcharts();
+    this.flowcharts = flowcharts
+    this.flowchartId = flowcharts[0].id
   }
 
-  setFlowchartStructure() {
+  async setFlowchartStructure() {
 
-    this.parentsService.getParentsByFlowchartId(this.flowchartId).subscribe((parentsData : any) => {
-      this.connections = parentsData
-    })
-
-    this.stepService.getStepsByFlowchartId(this.flowchartId).subscribe((stepsData : any) => {
-      this.steps = stepsData
-    }) 
-
-    this.drawFlowchartStructure()
+    await this.parentsService.getParentsByFlowchartId(this.flowchartId).then(connections => {
+      this.connections = connections;
+    });
+    
+    await this.stepService.getStepsByFlowchartId(this.flowchartId).then(steps => {
+      this.steps = steps
+      this.drawFlowchartStructure();
+    });
 
   }
 
 
-  drawFlowchartStructure() {
+  private drawFlowchartStructure() {
 
     // Limpar flowchart e botar o novo:
-    this.renderer.setProperty(this.flowchartDiv.nativeElement, 'innerHTML', "")
+    this.renderer.setProperty(this.flowchartDiv.nativeElement, 'innerHTML', "");
+    this.overStepsHtml = []
 
     const stepsQueue = [];
-    if (this.steps) stepsQueue.push(this.getRootStep())
-    this.drawStep(stepsQueue[0])
+    if (this.steps) stepsQueue.push(this.getRootStep());
+    this.drawStep(stepsQueue[0]);
 
     while(stepsQueue.length > 0) {
-      let currentStep = stepsQueue.shift()
-      let currentChildren = this.getChildrenFrom(currentStep)
-      if (currentChildren) stepsQueue.push(...currentChildren)
-      this.drawChildrenSteps(currentStep, currentChildren)
+      let currentStep = stepsQueue.shift();
+      let currentChildren = this.getChildrenFrom(currentStep);
+      if (currentChildren) stepsQueue.push(...currentChildren);
+      this.drawChildrenSteps(currentStep, currentChildren);
     }
 
   }
 
   private getRootStep(){
-    const childrenStepIds = []
+    const childrenStepIds = [];
     this.connections.forEach(connection => {
-      childrenStepIds.push(connection.step_id)
+      childrenStepIds.push(connection.step_id);
     })
-    return this.steps.find(step => !childrenStepIds.includes(step.id))
+    return this.steps.find(step => !childrenStepIds.includes(step.id));
   }
 
   private getChildrenFrom(step) {
-    const childrenStepIds = []
+    const childrenStepIds = [];
     this.connections.forEach(connection => {
       if (step.id == connection.step_parent_id) {
-        childrenStepIds.push(connection.step_id)
+        childrenStepIds.push(connection.step_id);
       }
     })
 
-    return this.steps.filter(step => childrenStepIds.includes(step.id))
+    return this.steps.filter(step => childrenStepIds.includes(step.id));
   }
 
   private drawStep(step) {
-      if (!step) return
+      if (!step) return;
       const overStepDiv = this.renderer.createElement('div');
       const stepDiv = this.renderer.createElement('div');
       const spanStep = this.renderer.createElement('span');
       const textStep = this.renderer.createText(step.title);
+      const stepAddButton = this.renderer.createElement('button');
+      const textStepAddButton = this.renderer.createElement('img');
+      const stepRemoveButton = this.renderer.createElement('button');
+      const textStepRemoveButton = this.renderer.createElement('img');
 
-      this.renderer.setAttribute(overStepDiv, 'id', step.id.toString())
-      this.renderer.setAttribute(stepDiv, 'class', 'steps')
-      this.renderer.setAttribute(overStepDiv, 'class', 'overSteps')
+      this.renderer.setAttribute(overStepDiv, 'id', step.id.toString());
+      this.renderer.setAttribute(stepDiv, 'class', 'steps');
+      this.renderer.setAttribute(overStepDiv, 'class', 'overSteps');
 
       this.renderer.appendChild(spanStep, textStep);
       this.renderer.appendChild(stepDiv, spanStep);
       this.renderer.appendChild(overStepDiv, stepDiv);
       this.renderer.appendChild(this.flowchartDiv.nativeElement, overStepDiv);
 
+      // buttons
+      this.renderer.setAttribute(textStepAddButton, 'class', 'icons')
+      this.renderer.setAttribute(textStepRemoveButton, 'class', 'icons')
+      this.renderer.setAttribute(textStepAddButton, 'src', this.plusSign)
+      this.renderer.setAttribute(textStepRemoveButton, 'src', this.trash)
+      this.renderer.setAttribute(stepAddButton, 'class', 'addButton');
+      this.renderer.setAttribute(stepRemoveButton, 'class', 'removeButton');
+      this.renderer.appendChild(stepRemoveButton, textStepRemoveButton);
+      this.renderer.appendChild(stepAddButton, textStepAddButton);
+      this.renderer.appendChild(stepDiv, stepAddButton);
+      this.renderer.appendChild(stepDiv, stepRemoveButton);
+
+      stepAddButton.addEventListener('click', this.addStep.bind(this, overStepDiv));
+      
       this.overStepsHtml.push(overStepDiv);
       return overStepDiv;
   }
 
   private drawChildrenSteps(parent, children) {
-      const groupDiv = this.renderer.createElement('div')
+      const groupDiv = this.renderer.createElement('div');
 
-      this.renderer.setAttribute(groupDiv, 'class', 'groupChildren')
+      this.renderer.setAttribute(groupDiv, 'class', 'groupChildren');
 
-      const parentHtml = this.overStepsHtml.find(step => step.id == parent.id)
+      const parentHtml = this.overStepsHtml.find(step => step.id == parent.id);
 
       children.forEach(child => {
-        let childHtml = this.drawStep(child)
-        if (childHtml && parentHtml) this.renderer.appendChild(groupDiv, childHtml)
+        let childHtml = this.drawStep(child);
+        if (childHtml && parentHtml) this.renderer.appendChild(groupDiv, childHtml);
       });
 
-      if (parentHtml) this.renderer.appendChild(parentHtml, groupDiv)
+      if (parentHtml) this.renderer.appendChild(parentHtml, groupDiv);
 
   }
 
+  addStep(parentDiv: any): any{
+
+    if (parentDiv) this.actualParentId = parentDiv.id
+    
+    // aparecer modal
+    this.modal.nativeElement.setAttribute("class", "modalOn")
+    
+  }
+
+  async submitStep(stepTitle: any){
+
+    let stepData = {
+      "title": stepTitle.value, 
+      "flowchart_id": this.flowchartId,
+    }
+    if (this.actualParentId) stepData["stepParentId"] = this.actualParentId
+
+    await this.stepService.createStep(stepData);
+    this.modal.nativeElement.setAttribute("class", "modalOff");
+    stepTitle.value = "";
+    await this.setFlowchartStructure()
+  }
+
+  backToScreen(stepTitle: any) {    
+    stepTitle.value = "";
+    this.modal.nativeElement.setAttribute("class", "modalOff");
+  }
 }
