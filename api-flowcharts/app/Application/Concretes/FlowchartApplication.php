@@ -14,12 +14,22 @@ class FlowchartApplication extends BaseApplication implements IFlowchartApplicat
         $this->flowchartDomain = $flowchartDomain;
     }
 
-    public function fetchAll() : Collection {
+    public function fetchAll(): Collection {
         return $this->flowchartDomain->fetchAll();
     }
 
-    public function store(Flowchart $flowchart) : Flowchart {
+    public function store(Flowchart $flowchart): Flowchart {
         return $this->flowchartDomain->store($flowchart);
+    }
+
+    public function edit(Flowchart $newFlowchart): Flowchart{
+
+        return $this->flowchartDomain->edit($newFlowchart);
+    }
+
+    public function delete(int $id): int {
+
+        return $this->flowchartDomain->delete($id);
     }
 
 }

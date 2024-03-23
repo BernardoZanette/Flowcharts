@@ -38,11 +38,13 @@ export class FlowchartsPageComponent {
   trash: string = "assets/images/trash.png";
 
   async ngOnInit() {
+
     await this.getFlowcharts();
     await this.setFlowchartStructure();
   }
 
   async getFlowcharts() {
+
     let flowcharts = await this.flowchartService.getFlowcharts();
     this.flowcharts = flowcharts
     this.flowchartId = flowcharts[0].id
@@ -99,6 +101,7 @@ export class FlowchartsPageComponent {
   }
 
   private drawStep(step) {
+
       if (!step) return;
       const overStepDiv = this.renderer.createElement('div');
       const stepDiv = this.renderer.createElement('div');
@@ -138,6 +141,7 @@ export class FlowchartsPageComponent {
   }
 
   private drawChildrenSteps(parent, children) {
+    
       const groupDiv = this.renderer.createElement('div');
 
       this.renderer.setAttribute(groupDiv, 'class', 'groupChildren');
@@ -156,7 +160,7 @@ export class FlowchartsPageComponent {
 
     if (parentDiv) this.actualParentId = parentDiv.id;
     
-    // aparecer modal
+    // show modal
     this.modal.nativeElement.setAttribute("class", "modalOn");
   }
 

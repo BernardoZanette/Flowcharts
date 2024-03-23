@@ -23,12 +23,26 @@ class FlowchartController extends Controller
     }
 
     public function index() {
+
         return $this->flowchartApplication->fetchAll();
     }
 
     public function store(FlowchartRequest $request) {
+
         $flowchart = $request->toModel(Flowchart::class);
         return $this->flowchartApplication->store($flowchart);
+    }
+
+    public function edit(int $id, FlowchartRequest $request) {
+
+        $newFlowchart = $request->toModel(Flowchart::class);
+        $newFlowchart->id = $id;
+        return $this->flowchartApplication->edit($newFlowchart);
+    }
+
+    public function delete(int $id) {
+
+        return $this->flowchartApplication->delete($id);
     }
 
     public function getStructure(int $id) {

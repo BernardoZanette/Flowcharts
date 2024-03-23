@@ -11,7 +11,4 @@ interface IStepParentRepository {
     public function store(int $stepId, ?int $stepParentId): StepParent;
 
     public function deleteConnections(int $stepId): array;
-
-    public function findStepParentsByStepParentIds(array $stepIds): Collection;
-
 }

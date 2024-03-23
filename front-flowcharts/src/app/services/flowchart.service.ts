@@ -52,14 +52,24 @@ export class FlowchartService {
     return promise;
   }
 
-  // public removeFlowchart(flowchartId: number): Promise<any> {
-  //   const promise: Promise<any> = new Promise((resolve: any, reject: any) => {
-  //     this.httpClient.delete(`${this.base}/${flowchartId}`).subscribe(
-  //       (response: any) => resolve(response),
-  //       (error: any) => reject(error)
-  //     );
-  //   })
-  //   return promise;
-  // }
+  public editFlowchart(flowchartData: any, flowchartId: number): Promise<any> {
+    const promise: Promise<any> = new Promise((resolve: any, reject: any) => {
+      this.httpClient.patch(`${this.base}/${flowchartId}`, flowchartData).subscribe(
+        (response: any) => resolve(response),
+        (error: any) => reject(error)
+      );
+    })
+    return promise;
+  }
+
+  public removeFlowchart(flowchartId: number): Promise<any> {
+    const promise: Promise<any> = new Promise((resolve: any, reject: any) => {
+      this.httpClient.delete(`${this.base}/${flowchartId}`).subscribe(
+        (response: any) => resolve(response),
+        (error: any) => reject(error)
+      );
+    })
+    return promise;
+  }
 
 }

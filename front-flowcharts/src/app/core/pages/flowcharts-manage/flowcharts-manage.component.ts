@@ -22,10 +22,13 @@ export class FlowchartsManageComponent {
   ) {};
 
   @ViewChild('modal', { static: true }) modal: ElementRef;
+  @ViewChild('flowchartTitle', { static: true }) flowchartTitleDiv: ElementRef;
   @ViewChild('tableBody', { static: true }) tableBody: ElementRef;
 
   flowcharts!: FlowchartResponse[];
   editingFlowchart: boolean = false;
+  flowchartTitle!: string;
+  flowchartId!: number;
 
   async ngOnInit() {
     
@@ -38,16 +41,36 @@ export class FlowchartsManageComponent {
     let flowcharts = await this.flowchartService.getFlowcharts();
     this.flowcharts = flowcharts;
   }
+  
+  async callEditModal(flowchartId: number, flowchartTitle: any) {
 
-  public editFlowchart(flowchartTitle: any) {
-    
-    this.editingFlowchart = true
-    this.callModal();
+    this.flowchartTitle = flowchartTitle;
+    this.flowchartTitleDiv.nativeElement.value = this.flowchartTitle;
+    this.flowchartId = flowchartId;
+    this.editingFlowchart = true;
+    await this.callModal();
   }
 
-  public deleteFlowchart() {
+  async editFlowchart(flowchartTitle: any) {
 
-    console.log('delete')
+    let flowchartData = {
+      "title": flowchartTitle.value, 
+    }
+
+    await this.flowchartService.editFlowchart(flowchartData, this.flowchartId);
+    this.modal.nativeElement.setAttribute("class", "modalOff");
+    flowchartTitle.value = "";
+    await this.getFlowcharts();
+    await this.setTableStructure(this.flowcharts);
+    this.modal.nativeElement.setAttribute("class", "modalOff");
+    this.editingFlowchart = false;
+  }
+
+  async removeFlowchart(flowchartId: number) {
+
+    await this.flowchartService.removeFlowchart(flowchartId);
+    await this.getFlowcharts();
+    await this.setTableStructure(this.flowcharts);
   }
 
   async addFlowchart(flowchartTitle: any) {
@@ -63,12 +86,13 @@ export class FlowchartsManageComponent {
   }
 
   public callModal() {
-    
+
     this.modal.nativeElement.setAttribute("class", "modalOn");
   }
   
   public backToScreen(flowchartTitle: any) {
     
+    this.editingFlowchart = false;
     flowchartTitle.value = "";
     this.modal.nativeElement.setAttribute("class", "modalOff");
   }
@@ -94,7 +118,7 @@ export class FlowchartsManageComponent {
 
       const editButton = this.renderer.createElement('button');
       this.renderer.addClass(editButton, 'editButton');
-      editButton.addEventListener('click', this.editFlowchart.bind(this, flowchart.title));
+      editButton.addEventListener('click', this.callEditModal.bind(this, flowchart.id, flowchart.title));
 
       const imgEditSign = this.renderer.createElement('img');
       this.renderer.addClass(imgEditSign, 'icons');
@@ -103,12 +127,12 @@ export class FlowchartsManageComponent {
 
       const removeButton = this.renderer.createElement('button');
       this.renderer.addClass(removeButton, 'removeButton');
-      removeButton.addEventListener('click', this.deleteFlowchart.bind(this, flowchart.id));
+      removeButton.addEventListener('click', this.removeFlowchart.bind(this, flowchart.id));
 
       const imgTrash = this.renderer.createElement('img');
       this.renderer.addClass(imgTrash, 'icons');
       this.renderer.setAttribute(imgTrash, 'src', 'assets/images/trash.png');
-      this.renderer.setAttribute(imgTrash, 'alt', 'delete sign');
+      this.renderer.setAttribute(imgTrash, 'alt', 'remove sign');
 
       this.renderer.appendChild(editButton, imgEditSign);
       this.renderer.appendChild(removeButton, imgTrash);

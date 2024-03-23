@@ -17,13 +17,21 @@ class FlowchartDomain implements IFlowchartDomain {
     public function fetchAll() : Collection {
 
         return $this->flowchartRepository->fetchAll();
-
     }
     
     public function store(Flowchart $flowchart) : Flowchart {
 
         return $this->flowchartRepository->store($flowchart);
+    }
 
+    public function edit(Flowchart $newFlowchart): Flowchart {
+        
+        return $this->flowchartRepository->edit($newFlowchart);
+    }
+
+    public function delete(int $id): int {
+
+        return $this->flowchartRepository->delete($id);
     }
 
 }

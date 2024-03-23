@@ -30,8 +30,7 @@ class StepParentRepository extends BaseRepository implements IStepParentReposito
     public function deleteConnections(int $stepId): array {
 
         $query = $this->getBuilder();
-        $childrenIds = $query->select('step_id')->where('step_parent_id', '=', $stepId)->get();
-        $childrenIds = $this->getIdsFromCollection($childrenIds);
+        $childrenIds = $query->select('step_id')->where('step_parent_id', '=', $stepId)->pluck('step_id')->toArray();
 
         $query->where('step_parent_id', '=', $stepId)
         ->orWhere('step_id', '=', $stepId)

@@ -38,14 +38,4 @@ class BaseRepository {
         }
         return $row;
     }
-
-    protected function getIdsFromCollection(Collection $childrenIds): array {
-        
-        $ids = [];
-        foreach($childrenIds as $childrenId) {
-            $ids[] = $childrenId->step_id;
-        }
-        return $ids;
-    }
-
 }

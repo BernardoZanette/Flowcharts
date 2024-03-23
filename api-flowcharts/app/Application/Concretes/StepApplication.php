@@ -18,10 +18,12 @@ class StepApplication extends BaseApplication implements IStepApplication {
     }
 
     public function fetchAll(): Collection {
+        
         return $this->stepDomain->fetchAll();
     }
 
     public function store(Step $step): Step {
+
         $step = $this->stepDomain->store($step);
         $this->stepParentDomain->store($step->id, $step->stepParentId);
         return $step;
@@ -32,7 +34,6 @@ class StepApplication extends BaseApplication implements IStepApplication {
         $childrenIds = $this->stepParentDomain->deleteConnections($stepId);
         $childrenIds[] = $stepId;
         $stepsIds = $childrenIds;
-        
         return $this->stepDomain->delete($stepsIds);
     }
 
