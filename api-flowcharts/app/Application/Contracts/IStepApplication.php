@@ -6,10 +6,13 @@ use Illuminate\Support\Collection;
 
 interface IStepApplication {
 
-    public function fetchAll() : Collection;
+    public function fetchAll(): Collection;
 
-    public function store(Step $step) : Step;
+    public function store(Step $step): Step;
+
+    // int = status code
+    public function delete(int $stepId): int;
     
-    public function findByFlowchartId(int $flowchartId) : Collection;
+    public function findByFlowchartId(int $flowchartId): Collection;
 
 }

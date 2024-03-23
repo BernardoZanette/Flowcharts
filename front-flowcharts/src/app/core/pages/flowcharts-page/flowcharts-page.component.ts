@@ -58,7 +58,6 @@ export class FlowchartsPageComponent {
       this.steps = steps
       this.drawFlowchartStructure();
     });
-
   }
 
 
@@ -78,7 +77,6 @@ export class FlowchartsPageComponent {
       if (currentChildren) stepsQueue.push(...currentChildren);
       this.drawChildrenSteps(currentStep, currentChildren);
     }
-
   }
 
   private getRootStep(){
@@ -133,6 +131,7 @@ export class FlowchartsPageComponent {
       this.renderer.appendChild(stepDiv, stepRemoveButton);
 
       stepAddButton.addEventListener('click', this.addStep.bind(this, overStepDiv));
+      stepRemoveButton.addEventListener('click', this.removeStep.bind(this, overStepDiv));
       
       this.overStepsHtml.push(overStepDiv);
       return overStepDiv;
@@ -151,16 +150,20 @@ export class FlowchartsPageComponent {
       });
 
       if (parentHtml) this.renderer.appendChild(parentHtml, groupDiv);
-
   }
 
   addStep(parentDiv: any): any{
 
-    if (parentDiv) this.actualParentId = parentDiv.id
+    if (parentDiv) this.actualParentId = parentDiv.id;
     
     // aparecer modal
-    this.modal.nativeElement.setAttribute("class", "modalOn")
-    
+    this.modal.nativeElement.setAttribute("class", "modalOn");
+  }
+
+  async removeStep(parentDiv: any){
+
+    await this.stepService.removeStep(parentDiv.id);
+    this.setFlowchartStructure();
   }
 
   async submitStep(stepTitle: any){
@@ -169,12 +172,12 @@ export class FlowchartsPageComponent {
       "title": stepTitle.value, 
       "flowchart_id": this.flowchartId,
     }
-    if (this.actualParentId) stepData["stepParentId"] = this.actualParentId
+    if (this.actualParentId) stepData["stepParentId"] = this.actualParentId;
 
     await this.stepService.createStep(stepData);
     this.modal.nativeElement.setAttribute("class", "modalOff");
     stepTitle.value = "";
-    await this.setFlowchartStructure()
+    await this.setFlowchartStructure();
   }
 
   backToScreen(stepTitle: any) {    

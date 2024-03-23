@@ -14,17 +14,22 @@ class StepParentDomain implements IStepParentDomain {
         $this->stepParentRepository = $stepParentRepository;
     }
     
-    public function fetchAll() : Collection {
+    public function fetchAll(): Collection {
 
         return $this->stepParentRepository->fetchAll();
     }
     
-    public function store(int $stepId, ?int $stepParentId = null) : StepParent {
+    public function store(int $stepId, ?int $stepParentId = null): StepParent {
 
         return $this->stepParentRepository->store($stepId, $stepParentId);
     }
 
-    public function findStepParentsBySteps(Collection $steps) : Collection {
+    public function deleteConnections(int $stepId): array {
+        
+        return $this->stepParentRepository->deleteConnections($stepId);
+    }
+
+    public function findStepParentsBySteps(Collection $steps): Collection {
 
         $stepIds = [];
         foreach ($steps as $step) {
@@ -32,5 +37,4 @@ class StepParentDomain implements IStepParentDomain {
         }
         return $this->stepParentRepository->findStepParentsByStepParentIds($stepIds);
     }
-
 }

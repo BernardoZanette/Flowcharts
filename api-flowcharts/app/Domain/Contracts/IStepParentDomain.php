@@ -10,6 +10,8 @@ interface IStepParentDomain {
 
     public function store(int $stepId, ?int $stepParentId) : StepParent;
 
+    public function deleteConnections(int $stepId) : array;
+
     public function findStepParentsBySteps(Collection $steps) : Collection;
 
 }

@@ -11,12 +11,14 @@ class StepRepository extends BaseRepository implements IStepRepository {
     protected $table = "steps";
     protected $excludedFields = ['stepParentId'];
 
-    public function fetchAll() : Collection {
+    public function fetchAll(): Collection {
+
         $query = $this->getBuilder();
         return $query->get();
     }
 
-    public function store(Step $step) : Step {
+    public function store(Step $step): Step {
+
         $query = $this->getBuilder();
         $stepArray = $this->mapModelToArray($step);
         $id = $query->insertGetId($stepArray);
@@ -24,7 +26,15 @@ class StepRepository extends BaseRepository implements IStepRepository {
         return $step;
     }
 
-    public function fetchByFlowchartId(int $id) : Collection {
+    public function delete(array $stepsIds): int {
+
+        $query = $this->getBuilder();
+        $query->whereIn("id", $stepsIds)->delete();
+        return http_response_code(202);
+    }
+
+    public function fetchByFlowchartId(int $id): Collection {
+
         $query = $this->getBuilder();
         $query->where("flowchart_id", $id);
         return $query->get();

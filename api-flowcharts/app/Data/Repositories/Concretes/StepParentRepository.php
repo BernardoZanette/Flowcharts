@@ -11,12 +11,14 @@ class StepParentRepository extends BaseRepository implements IStepParentReposito
     protected $table = "step_parents";
     protected $excludedFields = [];
 
-    public function fetchAll() : Collection {
+    public function fetchAll(): Collection {
+        
         $query = $this->getBuilder();
         return $query->get();
     }
 
-    public function store(int $stepId, ?int $stepParentId = null) : StepParent {
+    public function store(int $stepId, ?int $stepParentId = null): StepParent {
+        
         $query = $this->getBuilder();
         // $stepParent = new StepParent(["stepId" => $stepId, "stepParentId" => $stepParentId]); 
         // $stepParentArray = $this->mapModelToArray($stepParent);
@@ -25,10 +27,23 @@ class StepParentRepository extends BaseRepository implements IStepParentReposito
         return new StepParent();
     }
 
-    public function findStepParentsByStepParentIds(array $stepIds) : Collection {
+    public function deleteConnections(int $stepId): array {
+
+        $query = $this->getBuilder();
+        $childrenIds = $query->select('step_id')->where('step_parent_id', '=', $stepId)->get();
+        $childrenIds = $this->getIdsFromCollection($childrenIds);
+
+        $query->where('step_parent_id', '=', $stepId)
+        ->orWhere('step_id', '=', $stepId)
+        ->delete();
+
+        return $childrenIds;
+    }
+
+    public function findStepParentsByStepParentIds(array $stepIds): Collection {
+        
         $query = $this->getBuilder();
         $query->whereIn("step_parent_id", $stepIds);
         return $query->get();
     }
-
 }

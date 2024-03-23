@@ -25,6 +25,10 @@ class StepController extends Controller
         return $this->stepApplication->store($step);
     }
 
+    public function delete(int $stepId) {
+        return $this->stepApplication->delete($stepId);
+    }
+
     public function findByFlowchartId(int $flowchartId) {
         return $this->stepApplication->findByFlowchartId($flowchartId);
     }

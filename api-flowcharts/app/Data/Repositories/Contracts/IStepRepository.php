@@ -6,10 +6,12 @@ use Illuminate\Support\Collection;
 
 interface IStepRepository {
     
-    public function fetchAll() : Collection;
+    public function fetchAll(): Collection;
 
-    public function store(Step $step) : Step;
+    public function store(Step $step): Step;
 
-    public function fetchByFlowchartId(int $id) : Collection;
+    public function delete(array $stepsIds): int;
+
+    public function fetchByFlowchartId(int $id): Collection;
 
 }
