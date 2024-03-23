@@ -1,7 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 body {
     background-color: rgb(20, 20, 20);
+    margin: 0px;
 }
 span, h1 {
     color: white;
+}
+
+.removeButton {
+    background-color: transparent;
+    border: none;
+    font-size: large;
+    font-weight: bold;
+}
+
+.icons {
+    width: 20px;
+    height: 20px;
 }

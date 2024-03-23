@@ -1,8 +1,9 @@
-<h1>Flowcharts</h1>
-<span>Flowchart name:</span>
-<select  [(ngModel)]="flowchartId" (change)="setFlowchartStructure()" name="flowcharts" id="flowcharts">
-    <option [value]="flowchart.id" *ngFor="let flowchart of flowcharts">{{flowchart.title}}</option>
-</select>
+<div class="selectDiv">
+    <span>Flowchart name:</span>
+    <select [(ngModel)]="flowchartId" (change)="setFlowchartStructure()" name="flowcharts" id="flowcharts">
+        <option [value]="flowchart.id" *ngFor="let flowchart of flowcharts">{{flowchart.title}}</option>
+    </select>
+</div>
 
 <div *ngIf="!this.steps.length" id="firstStepDiv">
     <span>Add First Step</span>

@@ -5,6 +5,9 @@ import { HttpClient } from '@angular/common/http';
 export interface FlowchartResponse {
   "id": number
   "title": string
+  "created_at": Date
+  "updated_at": Date
+  "deleted_at": Date
   "flowchartId": number
   "stepParentIds": []
 }
@@ -19,7 +22,7 @@ export class FlowchartService {
 
   constructor(private httpClient: HttpClient) {}
 
-  public getStructure(flowchartId : number): Promise<any> {
+  public getStructure(flowchartId: number): Promise<any> {
     const promise: Promise<any> = new Promise((resolve: any, reject: any) => {
       this.httpClient.get(`${this.base}/${flowchartId}/structure`).subscribe(
         (response: any) => resolve(response),
@@ -38,5 +41,25 @@ export class FlowchartService {
     })
     return promise;
   }
+
+  public createFlowchart(flowchartData: any): Promise<any> {
+    const promise: Promise<any> = new Promise((resolve: any, reject: any) => {
+      this.httpClient.post(`${this.base}`, flowchartData).subscribe(
+        (response: any) => resolve(response),
+        (error: any) => reject(error)
+      );
+    })
+    return promise;
+  }
+
+  // public removeFlowchart(flowchartId: number): Promise<any> {
+  //   const promise: Promise<any> = new Promise((resolve: any, reject: any) => {
+  //     this.httpClient.delete(`${this.base}/${flowchartId}`).subscribe(
+  //       (response: any) => resolve(response),
+  //       (error: any) => reject(error)
+  //     );
+  //   })
+  //   return promise;
+  // }
 
 }

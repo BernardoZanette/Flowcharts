@@ -1,42 +1,65 @@
-#flowchart {
+.editButton {
+    background-color: transparent;
+    border: none;
+}
+
+#pageContent {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
+    margin: 30px;
 }
-.overSteps {
-    height: min-content;
+
+.flowchartHead {
+    display: flex;
     width: 100%;
+    justify-content: space-between;
+    align-items: center;
 }
-.steps {
-    margin: 20px;
-    border-radius: 10px;
-    padding: 10px;
-    height: min-content;
-    border: solid 2px purple;
-    display: flex;
-    justify-content: center;
-}
-.groupChildren {
-    display: flex;
-}
-span {
-    margin-right: 10px;
-    font-size: 20px;
-}
-select {
-    background-color: rgb(20, 20, 20);
+
+.flowchartHead h2 {
     color: white;
-    border: none;
-    outline: 0;
-    font-size: 20px;
 }
-.selectDiv {
-    margin-left: 50px;
+
+.flowchartHead button {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: solid 1px green;
+    border-radius: 10px;
 }
-.selectDiv span {
-    font-size: 23px;
+
+.flowchartHead span {
+    margin: 10px;
 }
+
+.flowchartHead img{
+    float: left;
+}
+
+.manageTable {
+    border-collapse: collapse;
+}
+
+.manageTable tr:nth-child(even){background-color: #444444;}
+
+.manageTable tr:hover {background-color: #222222;}
+
+.manageTable th {
+    font-size: larger;
+    background-color: #444444;
+}
+.manageTable td {
+    font-size: large;
+    background-color: transparent !important;
+}
+
+.manageTable th,td {
+    padding: 10px 20px;
+    color: white;
+    text-align: center;
+}
+
 #modal {
     display: none; 
     position: fixed;
@@ -70,7 +93,7 @@ select {
     flex-direction: column;
 }
 
-#stepTitle {
+#flowchartTitle {
     background-color: transparent;
     border: none;
     border-bottom: solid 1px black;
@@ -79,7 +102,7 @@ select {
     color: white;
 }
 
-#stepTitle::placeholder {
+#flowchartTitle::placeholder {
     color: white;
 }
 
@@ -109,15 +132,13 @@ select {
     border: solid 1px transparent;
 }
 
-.addButton {
+#editButton {
     background-color: transparent;
-    color: rgb(0, 255, 0);
-    border: none;
-}
-
-#firstStepDiv {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    color: white;
+    border-radius: 10px;
+    padding: 5px 10px;
+    background-color: rgb(255, 166, 0);
+    font-size: 0.8rem;
+    font-weight: bold;
+    border: solid transparent;
 }

@@ -1,0 +1,78 @@
+<div #modal id="modal" class="modalOff">
+    <div class="modal-content">
+        <form id="modalForm">
+            <input type="text" #flowchartTitle id="flowchartTitle" placeholder="Type the flowchart title...">
+            <div id="modalButtons">
+                <button *ngIf="editingFlowchart; else addButton" id="editButton" (click)="editFlowchart(flowchartTitle)">Edit flowchart</button>
+                <ng-template #addButton>
+                    <button id="submitButton" (click)="addFlowchart(flowchartTitle)">Add flowchart</button>
+                </ng-template>
+                <button id="backButton" (click)="backToScreen(flowchartTitle)">Back</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="pageContent">
+    <div id="manageContent">
+        <div class="flowchartHead">
+            <h2>Flowchart Management</h2>
+            <div>
+                <button (click)="callModal()">
+                    <img class="icons" src="assets/images/plus-sign.png" alt="plus sign">
+                    <span>Add new flowchart!</span>
+                </button>
+            </div>
+        </div>
+        <table class="manageTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody #tableBody></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 
+<div id="pageContent">
+    <div id="manageContent">
+        <div class="flowchartHead">
+            <h2>Flowchart Management</h2>
+            <div>
+                <button (click)="callModal()">
+                    <img class="icons" src="assets/images/plus-sign.png" alt="plus sign">
+                    <span>Add new flowchart!</span>
+                </button>
+            </div>
+        </div>
+        <table class="manageTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let flowchart of flowcharts; index as i">
+                    <td>{{i+1}}</td>
+                    <td>{{flowchart.title}}</td>
+                    <td>{{flowchart.created_at}}</td>
+                    <td>{{flowchart.updated_at}}</td>
+                    <td>
+                        <button class="editButton" (click)="editFlowchart()"><img class="icons" src="assets/images/edit-sign.png" alt="edit sign"></button>
+                        <button class="removeButton" (click)="deleteFlowchart()"><img class="icons" src="assets/images/trash.png" alt="delete sign"></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div> -->
