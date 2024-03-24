@@ -29,6 +29,8 @@ export class FlowchartsManageComponent {
   editingFlowchart: boolean = false;
   flowchartTitle!: string;
   flowchartId!: number;
+  editSign: string = "assets/images/edit-sign.png";
+  trash: string = "assets/images/trash.png";
 
   async ngOnInit() {
     
@@ -122,7 +124,7 @@ export class FlowchartsManageComponent {
 
       const imgEditSign = this.renderer.createElement('img');
       this.renderer.addClass(imgEditSign, 'icons');
-      this.renderer.setAttribute(imgEditSign, 'src', 'assets/images/edit-sign.png');
+      this.renderer.setAttribute(imgEditSign, 'src', this.editSign);
       this.renderer.setAttribute(imgEditSign, 'alt', 'edit sign');
 
       const removeButton = this.renderer.createElement('button');
@@ -131,7 +133,7 @@ export class FlowchartsManageComponent {
 
       const imgTrash = this.renderer.createElement('img');
       this.renderer.addClass(imgTrash, 'icons');
-      this.renderer.setAttribute(imgTrash, 'src', 'assets/images/trash.png');
+      this.renderer.setAttribute(imgTrash, 'src', this.trash);
       this.renderer.setAttribute(imgTrash, 'alt', 'remove sign');
 
       this.renderer.appendChild(editButton, imgEditSign);

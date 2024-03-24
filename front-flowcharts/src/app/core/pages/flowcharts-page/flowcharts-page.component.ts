@@ -170,7 +170,10 @@ export class FlowchartsPageComponent {
     this.setFlowchartStructure();
   }
 
-  async submitStep(stepTitle: any){
+  async submitStep(event, stepTitle: any){
+
+    // disable button to not add 2 steps in a doubleclick
+    event.srcElement.disabled = true;
 
     let stepData = {
       "title": stepTitle.value, 
@@ -181,6 +184,7 @@ export class FlowchartsPageComponent {
     await this.stepService.createStep(stepData);
     this.modal.nativeElement.setAttribute("class", "modalOff");
     stepTitle.value = "";
+    event.srcElement.disabled = false;
     await this.setFlowchartStructure();
   }
 

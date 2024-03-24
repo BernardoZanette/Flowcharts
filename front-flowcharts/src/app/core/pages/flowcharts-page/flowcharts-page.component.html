@@ -15,7 +15,7 @@
         <form id="modalForm">
             <input type="text" #stepTitle id="stepTitle" placeholder="Type the step title...">
             <div id="modalButtons">
-                <button id="submitButton" (click)="submitStep(stepTitle)">Add Step</button>
+                <button id="submitButton" (click)="submitStep($event, stepTitle)">Add Step</button>
                 <button id="backButton" (click)="backToScreen(stepTitle)">Back</button>
             </div>
         </form>
