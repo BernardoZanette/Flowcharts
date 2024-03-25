@@ -13,9 +13,10 @@
     border-radius: 10px;
     padding: 10px;
     height: min-content;
-    border: solid 2px purple;
+    border: solid 2px rgb(3, 112, 131);
     display: flex;
     justify-content: center;
+    word-break: break-all;
 }
 .groupChildren {
     display: flex;
@@ -121,4 +122,52 @@ select {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+@media (max-width: 750px) {
+    
+    .selectDiv span {
+        font-size: 20px;
+    }
+
+    span {
+        font-size: 17px;
+    }
+
+    select {
+        font-size: 20px;
+    }
+
+}
+
+@media (min-width: 1300px) {
+    
+    .selectDiv span {
+        font-size: 30px;
+    }
+
+    span {
+        font-size: 26px;
+    }
+
+    select {
+        font-size: 30px;
+    }
+
+}
+
+@media (min-width: 1800px) {
+
+    .selectDiv span {
+        font-size: 45px;
+    }
+
+    span {
+        font-size: 40px;
+    }
+
+    select {
+        font-size: 45px;
+    }
+
 }
