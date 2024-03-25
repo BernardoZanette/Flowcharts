@@ -4,6 +4,7 @@ namespace App\Data\Repositories\Concretes;
 use App\Data\Repositories\Concretes\BaseRepository;
 use App\Data\Repositories\Contracts\IFlowchartRepository;
 use App\Models\Flowchart;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 class FlowchartRepository extends BaseRepository implements IFlowchartRepository {
@@ -20,8 +21,16 @@ class FlowchartRepository extends BaseRepository implements IFlowchartRepository
        
         $query = $this->getBuilder();
         $flowchartArray = $this->mapModelToArray($flowchart);
+        
+        $now = Carbon::parse($flowchart->createdAt)
+            ->setTimezone(config('app.timezone'))
+            ->format('Y-m-d H:i:s');
+        $flowchartArray['created_at'] = $now;
+        $flowchartArray['updated_at'] = $now;
+
         $id = $query->insertGetId($flowchartArray);
         $flowchart->id = $id;
+
         return $flowchart;
     }
 
@@ -29,6 +38,12 @@ class FlowchartRepository extends BaseRepository implements IFlowchartRepository
         
         $query = $this->getBuilder();
         $newFlowchartArray = $this->mapModelToArray($newFlowchart);
+        
+        $now = Carbon::parse($newFlowchart->createdAt)
+        ->setTimezone(config('app.timezone'))
+        ->format('Y-m-d H:i:s');
+        $newFlowchartArray['updated_at'] = $now;
+
         $id = $newFlowchartArray['id'];
         unset($newFlowchartArray['id']);
         $query->where('id', $id)->update($newFlowchartArray);

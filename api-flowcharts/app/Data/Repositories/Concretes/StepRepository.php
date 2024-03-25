@@ -4,6 +4,7 @@ namespace App\Data\Repositories\Concretes;
 use App\Data\Repositories\Concretes\BaseRepository;
 use App\Data\Repositories\Contracts\IStepRepository;
 use App\Models\Step;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 class StepRepository extends BaseRepository implements IStepRepository {
@@ -21,6 +22,13 @@ class StepRepository extends BaseRepository implements IStepRepository {
 
         $query = $this->getBuilder();
         $stepArray = $this->mapModelToArray($step);
+        
+        $now = Carbon::parse($step->createdAt)
+            ->setTimezone(config('app.timezone'))
+            ->format('Y-m-d H:i:s');
+        $stepArray['created_at'] = $now;
+        $stepArray['updated_at'] = $now;
+
         $id = $query->insertGetId($stepArray);
         $step->id = $id;
         return $step;

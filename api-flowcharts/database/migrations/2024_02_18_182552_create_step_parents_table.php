@@ -20,7 +20,6 @@ return new class extends Migration
             $table->unsignedBigInteger("parent_step_id")->nullable(false);
             $table->foreign("parent_step_id")->references("id")->on("steps");
 
-            $table->softDeletes();
             $table->timestamps();
         });
     }

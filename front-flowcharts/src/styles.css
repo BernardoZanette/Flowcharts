@@ -3,6 +3,9 @@ body {
     background-color: rgb(20, 20, 20);
     margin: 0px;
 }
+* {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
 span, h1 {
     color: white;
 }
