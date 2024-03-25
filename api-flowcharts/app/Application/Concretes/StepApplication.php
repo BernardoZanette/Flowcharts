@@ -17,17 +17,27 @@ class StepApplication extends BaseApplication implements IStepApplication {
         $this->stepParentDomain = $stepParentDomain;
     }
 
-    public function fetchAll() : Collection {
+    public function fetchAll(): Collection {
+        
         return $this->stepDomain->fetchAll();
     }
 
-    public function store(Step $step) : Step {
+    public function store(Step $step): Step {
+
         $step = $this->stepDomain->store($step);
-        $this->stepParentDomain->store($step->id, $step->stepParentId);
+        if ($step->stepParentId) $this->stepParentDomain->store($step->id, $step->stepParentId);
         return $step;
     }
 
-    public function findByFlowchartId(int $flowchartId) : Collection {
+    public function delete(int $stepId): int {
+
+        $childrenIds = $this->stepParentDomain->deleteConnections($stepId);
+        $childrenIds[] = $stepId;
+        $stepsIds = $childrenIds;
+        return $this->stepDomain->delete($stepsIds);
+    }
+
+    public function findByFlowchartId(int $flowchartId): Collection {
         return $this->stepDomain->fetchByFlowchartId($flowchartId);
     }
 

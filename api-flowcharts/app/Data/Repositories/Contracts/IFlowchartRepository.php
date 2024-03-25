@@ -10,4 +10,7 @@ interface IFlowchartRepository {
 
     public function store(Flowchart $flowchart) : Flowchart;
 
+    public function edit(Flowchart $flowchart): Flowchart;
+    
+    public function delete(int $id): int;
 }

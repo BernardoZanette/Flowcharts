@@ -1,7 +1,7 @@
 #flowchart {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    /* flex-direction: column; */
     margin-top: 20px;
 }
 .overSteps {
@@ -13,15 +13,13 @@
     border-radius: 10px;
     padding: 10px;
     height: min-content;
-    border: solid 2px purple;
+    border: solid 2px rgb(3, 112, 131);
     display: flex;
     justify-content: center;
+    word-break: break-all;
 }
 .groupChildren {
     display: flex;
-}
-h1 {
-    text-align: center;
 }
 span {
     margin-right: 10px;
@@ -34,7 +32,13 @@ select {
     outline: 0;
     font-size: 20px;
 }
-
+.selectDiv {
+    margin-left: 50px;
+    margin-bottom: 25px;
+}
+.selectDiv span {
+    font-size: 23px;
+}
 #modal {
     display: none; 
     position: fixed;
@@ -111,21 +115,6 @@ select {
     background-color: transparent;
     color: rgb(0, 255, 0);
     border: none;
-    font-size: x-large;
-    font-weight: bold;
-}
-
-.removeButton {
-    background-color: transparent;
-    color: rgb(255, 0, 0);
-    border: none;
-    font-size: large;
-    font-weight: bold;
-}
-
-.icons {
-    width: 20px;
-    height: 20px;
 }
 
 #firstStepDiv {
@@ -133,4 +122,52 @@ select {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+@media (max-width: 750px) {
+    
+    .selectDiv span {
+        font-size: 20px;
+    }
+
+    span {
+        font-size: 17px;
+    }
+
+    select {
+        font-size: 20px;
+    }
+
+}
+
+@media (min-width: 1300px) {
+    
+    .selectDiv span {
+        font-size: 30px;
+    }
+
+    span {
+        font-size: 26px;
+    }
+
+    select {
+        font-size: 30px;
+    }
+
+}
+
+@media (min-width: 1800px) {
+
+    .selectDiv span {
+        font-size: 45px;
+    }
+
+    span {
+        font-size: 40px;
+    }
+
+    select {
+        font-size: 45px;
+    }
+
 }

@@ -12,5 +12,4 @@ class Flowchart extends Model
     protected ?Carbon $createdAt = null;
     protected ?Carbon $updatedAt = null;
     protected ?Carbon $deletedAt = null;
-    
 }

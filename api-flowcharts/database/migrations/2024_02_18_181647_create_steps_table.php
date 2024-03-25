@@ -18,7 +18,6 @@ return new class extends Migration
             $table->unsignedBigInteger("flowchart_id")->nullable(false);
             $table->foreign("flowchart_id")->references("id")->on("flowcharts");
 
-            $table->softDeletes();
             $table->timestamps();
         });
     }

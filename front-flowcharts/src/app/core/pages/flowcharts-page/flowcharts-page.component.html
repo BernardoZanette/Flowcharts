@@ -1,8 +1,9 @@
-<h1>Flowcharts</h1>
-<span>Flowchart name:</span>
-<select  [(ngModel)]="flowchartId" (change)="setFlowchartStructure()" name="flowcharts" id="flowcharts">
-    <option [value]="flowchart.id" *ngFor="let flowchart of flowcharts">{{flowchart.title}}</option>
-</select>
+<div class="selectDiv">
+    <span>Flowchart name:</span>
+    <select [(ngModel)]="flowchartId" (change)="setFlowchartStructure()" name="flowcharts" id="flowcharts">
+        <option [value]="flowchart.id" *ngFor="let flowchart of flowcharts">{{flowchart.title}}</option>
+    </select>
+</div>
 
 <div *ngIf="!this.steps.length" id="firstStepDiv">
     <span>Add First Step</span>
@@ -14,7 +15,7 @@
         <form id="modalForm">
             <input type="text" #stepTitle id="stepTitle" placeholder="Type the step title...">
             <div id="modalButtons">
-                <button id="submitButton" (click)="submitStep(stepTitle)">Add Step</button>
+                <button id="submitButton" (click)="submitStep($event, stepTitle)">Add Step</button>
                 <button id="backButton" (click)="backToScreen(stepTitle)">Back</button>
             </div>
         </form>

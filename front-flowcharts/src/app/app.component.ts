@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { NavBarComponent } from './core/partials/nav-bar/nav-bar.component';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,7 @@ import { RouterOutlet } from '@angular/router';
   imports: [
     CommonModule,
     RouterOutlet,
+    NavBarComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

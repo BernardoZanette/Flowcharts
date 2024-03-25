@@ -38,11 +38,13 @@ export class FlowchartsPageComponent {
   trash: string = "assets/images/trash.png";
 
   async ngOnInit() {
+
     await this.getFlowcharts();
     await this.setFlowchartStructure();
   }
 
   async getFlowcharts() {
+
     let flowcharts = await this.flowchartService.getFlowcharts();
     this.flowcharts = flowcharts
     this.flowchartId = flowcharts[0].id
@@ -58,7 +60,6 @@ export class FlowchartsPageComponent {
       this.steps = steps
       this.drawFlowchartStructure();
     });
-
   }
 
 
@@ -78,7 +79,6 @@ export class FlowchartsPageComponent {
       if (currentChildren) stepsQueue.push(...currentChildren);
       this.drawChildrenSteps(currentStep, currentChildren);
     }
-
   }
 
   private getRootStep(){
@@ -101,6 +101,7 @@ export class FlowchartsPageComponent {
   }
 
   private drawStep(step) {
+
       if (!step) return;
       const overStepDiv = this.renderer.createElement('div');
       const stepDiv = this.renderer.createElement('div');
@@ -133,12 +134,14 @@ export class FlowchartsPageComponent {
       this.renderer.appendChild(stepDiv, stepRemoveButton);
 
       stepAddButton.addEventListener('click', this.addStep.bind(this, overStepDiv));
+      stepRemoveButton.addEventListener('click', this.removeStep.bind(this, overStepDiv));
       
       this.overStepsHtml.push(overStepDiv);
       return overStepDiv;
   }
 
   private drawChildrenSteps(parent, children) {
+    
       const groupDiv = this.renderer.createElement('div');
 
       this.renderer.setAttribute(groupDiv, 'class', 'groupChildren');
@@ -151,30 +154,38 @@ export class FlowchartsPageComponent {
       });
 
       if (parentHtml) this.renderer.appendChild(parentHtml, groupDiv);
-
   }
 
   addStep(parentDiv: any): any{
 
-    if (parentDiv) this.actualParentId = parentDiv.id
+    if (parentDiv) this.actualParentId = parentDiv.id;
     
-    // aparecer modal
-    this.modal.nativeElement.setAttribute("class", "modalOn")
-    
+    // show modal
+    this.modal.nativeElement.setAttribute("class", "modalOn");
   }
 
-  async submitStep(stepTitle: any){
+  async removeStep(parentDiv: any){
+
+    await this.stepService.removeStep(parentDiv.id);
+    this.setFlowchartStructure();
+  }
+
+  async submitStep(event, stepTitle: any){
+
+    // disable button to not add 2 steps in a doubleclick
+    event.srcElement.disabled = true;
 
     let stepData = {
       "title": stepTitle.value, 
       "flowchart_id": this.flowchartId,
     }
-    if (this.actualParentId) stepData["stepParentId"] = this.actualParentId
+    if (this.actualParentId) stepData["stepParentId"] = this.actualParentId;
 
     await this.stepService.createStep(stepData);
     this.modal.nativeElement.setAttribute("class", "modalOff");
     stepTitle.value = "";
-    await this.setFlowchartStructure()
+    event.srcElement.disabled = false;
+    await this.setFlowchartStructure();
   }
 
   backToScreen(stepTitle: any) {    

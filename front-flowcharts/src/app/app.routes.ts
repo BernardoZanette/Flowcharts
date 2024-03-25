@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { FlowchartsPageComponent } from './core/pages/flowcharts-page/flowcharts-page.component';
+import { FlowchartsManageComponent } from './core/pages/flowcharts-manage/flowcharts-manage.component';
 
 export const routes: Routes = [
-    {path: '', component: FlowchartsPageComponent, title:'Flowcharts list'},
+    {path: '', component: FlowchartsManageComponent, title:'Flowcharts Management'},
+    {path: 'flowchartList', component: FlowchartsPageComponent, title:'Flowcharts List'},
 ];
