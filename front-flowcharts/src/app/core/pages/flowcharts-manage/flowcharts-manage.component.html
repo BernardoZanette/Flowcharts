@@ -39,7 +39,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let flowchart of flowcharts | search: searchText;">  
+                <tr *ngFor="let flowchart of flowcharts | search: searchText;" [routerLink]="['flowchartList', flowchart.id]" >  
                     <td>{{flowchart.id}}</td>
                     <td>{{flowchart.title}}</td>
                     <td>{{flowchart.created_at}}</td>

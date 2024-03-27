@@ -4,5 +4,5 @@ import { FlowchartsManageComponent } from './core/pages/flowcharts-manage/flowch
 
 export const routes: Routes = [
     {path: '', component: FlowchartsManageComponent, title:'Flowcharts Management'},
-    {path: 'flowchartList', component: FlowchartsPageComponent, title:'Flowcharts List'},
+    {path: 'flowchartList/:id', component: FlowchartsPageComponent, title:'Flowcharts List'},
 ];

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Renderer2 } from '@angular/core';
 import { StepResponse, StepService } from '../../../services/step.service';
 import { ParentResponse, ParentsService } from '../../../services/parents.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-flowcharts-page',
@@ -22,7 +23,8 @@ export class FlowchartsPageComponent {
     private flowchartService: FlowchartService, 
     private stepService: StepService,
     private parentsService: ParentsService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private route: ActivatedRoute,
   ) {}
 
   @ViewChild('flowchart', { static: true }) flowchartDiv: ElementRef;
@@ -47,7 +49,10 @@ export class FlowchartsPageComponent {
 
     let flowcharts = await this.flowchartService.getFlowcharts();
     this.flowcharts = flowcharts
-    this.flowchartId = flowcharts[0].id
+    this.route.params.subscribe(params => {
+      if (params['id']) this.flowchartId = params['id'];
+      else this.flowchartId = flowcharts[0].id;
+    })
   }
 
   async setFlowchartStructure() {

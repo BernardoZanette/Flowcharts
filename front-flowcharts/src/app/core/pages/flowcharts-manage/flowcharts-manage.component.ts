@@ -3,6 +3,7 @@ import { FlowchartResponse, FlowchartService } from '../../../services/flowchart
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SearchPipe } from './search.pipe';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-flowcharts-manage',
@@ -10,7 +11,8 @@ import { SearchPipe } from './search.pipe';
   imports: [
     CommonModule,
     FormsModule,
-    SearchPipe
+    SearchPipe,
+    RouterModule
   ],
   templateUrl: './flowcharts-manage.component.html',
   styleUrl: './flowcharts-manage.component.css'
